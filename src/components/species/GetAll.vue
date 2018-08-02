@@ -3,41 +3,15 @@
       <h1>
         All Species
       </h1>
-      <div v-if="loading">
-        <div class='loader-ring'>
-          <div class='loader-ring-light'></div>
-          <div class='loader-ring-track'></div>
-        </div>
-      </div>
+      <router-link class="search-button" to="/species/search">Search</router-link>
+      <Loader v-if="loading"></Loader>
       <ul class="list-unstyled flex-grid">
         <li class="flex-item" v-if="species.previous">
           <div class="paging" @click="getSpecies(species.previous.slice(-1))">
             Prev Page
           </div>
         </li>
-        <li class="flex-item" v-for="specie in species.results" :key="specie.name">
-          <div class="box">
-            <h2>{{ specie.name }}</h2>
-            <div class="content-block">
-              <div class="is-heading">
-                Language
-              </div>
-              {{ specie.language }}
-            </div>
-            <div class="content-block">
-              <div class="is-heading">
-                Height
-              </div>
-              {{ specie.average_height }}
-            </div>
-            <div class="content-block">
-              <div class="is-heading">
-                Lifespan
-              </div>
-              {{ specie.average_lifespan }} <span v-if="specie.average_lifespan !== 'unknown'">years</span>
-            </div>
-          </div>
-        </li>
+        <GetDetails v-for="specie in species.results" :key="specie.name" :specie="specie"></GetDetails>
         <li class="flex-item" v-if="species.next">
           <div class="paging" @click="getSpecies(species.next.slice(-1))">
             Next Page
@@ -49,6 +23,8 @@
 
 <script>
 import SpeciesApi from "@/api/species";
+import Loader from "@/components/global/Loader";
+import GetDetails from "@/components/species/GetDetails";
 
 export default {
   name: "Species",
@@ -57,6 +33,10 @@ export default {
       species: "",
       loading: true
     };
+  },
+  components: {
+    GetDetails,
+    Loader
   },
   mounted() {
     this.getSpecies(1);
@@ -85,6 +65,7 @@ export default {
   padding: 1.5rem;
   text-align: center;
   background-color: #ffffff;
+  word-wrap: break-word;
   h2 {
     margin: 0 0 0.5rem 0;
   }
@@ -115,59 +96,24 @@ export default {
   flex-wrap: wrap;
   align-content: stretch;
   align-items: center;
-  .flex-item {
-    width: 25%;
-    padding: 1.5rem;
-  }
+}
+.flex-item {
+  width: 25%;
+  padding: 1.5rem;
 }
 
-.loader-ring {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin: -60px 0 0 -60px;
-  width: 120px;
-  height: 120px;
-}
-
-.loader-ring-light {
-  width: 120px;
-  height: 120px;
-  -moz-border-radius: 120px;
-  -webkit-border-radius: 120px;
-  border-radius: 120px;
-  -moz-box-shadow: 0 3px 0 #000000;
-  -webkit-box-shadow: 0 3px 0 #000000;
-  box-shadow: 0 3px 0 #000000;
-  animation: rotate-360 2s linear infinite;
-}
-
-.loader-ring-track {
+.search-button {
   position: absolute;
   top: 0;
-  left: 0;
-  width: 120px;
-  height: 120px;
-  -moz-border-radius: 120px;
-  -webkit-border-radius: 120px;
-  border-radius: 120px;
-  -moz-box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.1) inset;
-  -webkit-box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.1) inset;
-  box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.1) inset;
-}
-
-@keyframes rotate-360 {
-  from {
-    -moz-transform: rotate(0);
-    -ms-transform: rotate(0);
-    -webkit-transform: rotate(0);
-    transform: rotate(0);
-  }
-  to {
-    -moz-transform: rotate(360deg);
-    -ms-transform: rotate(360deg);
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
+  right: 0;
+  background-color: #ecd32c;
+  border: none;
+  font-weight: 300;
+  padding: 1rem 2rem;
+  cursor: pointer;
+  &:hover {
+    background-color: #000000;
+    color: #fee123;
   }
 }
 </style>

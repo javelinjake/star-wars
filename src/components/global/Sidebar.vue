@@ -8,16 +8,19 @@
         <router-link to="/species">Species</router-link>
       </li>
       <li>
-        <router-link to="/species">People</router-link>
+        <router-link to="/people">People</router-link>
       </li>
       <li>
-        <router-link to="/species">Starships</router-link>
+        <router-link to="/starships">Starships</router-link>
       </li>
       <li>
-        <router-link to="/species">Planets</router-link>
+        <router-link to="/planets">Planets</router-link>
       </li>
       <li>
-        <router-link to="/species">Vehicles</router-link>
+        <router-link to="/vehicles">Vehicles</router-link>
+      </li>
+      <li>
+        <router-link to="/carehomes">Care Homes</router-link>
       </li>
     </ul>
   </nav>
